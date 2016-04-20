@@ -9,6 +9,11 @@ $ service httpd restart
 
 Requirements:
 
-	- openssl-devel  (OpenSSL Client Library)
-	- httpd-devel    (APXS)
-	- gcc
+ - openssl-devel  (OpenSSL Client Library)
+ - httpd-devel    (APXS)
+ - gcc
+
+More information:
+
+ English: https://blog.certcenter.com/2016/04/mod-fauth-fileauth-without-files/
+ German: https://blog.certcenter.de/2016/04/fileauth-without-files/
