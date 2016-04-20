@@ -111,22 +111,33 @@ static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbI
 	apr_bucket *pbktOut, *pbktIn;
 	apr_bucket_brigade *pbbOut;
 	int slu;
-	char *uri, *buf, *hash;
-	uri = strtok(r->the_request, " ");
+	char *uri, *buf, *hash, *req;
+	req = malloc(sizeof(char)*strlen(r->the_request)+1);
+	strncpy(req,r->the_request,strlen(r->the_request));
+	req[strlen(req)]=0;
+	uri = strtok(req, " ");
 	if(uri) uri = strtok(NULL, " ");
-	if(!uri) return ap_pass_brigade(f->next,pbbIn);
+	if(!uri) {
+		free(req);
+		return ap_pass_brigade(f->next,pbbIn);
+	}
 	slu = strlen(uri);
 	uri[slu]=0;
 	if( !(r->status==HTTP_NOT_FOUND||r->status==HTTP_FORBIDDEN) ||
 		r->method_number!=M_GET ||
 		strlen(uri)!=DVAUTH_FILENAME_LENGTH ||
 		(uri[slu-4]!='.' || uri[slu-3]!='h' || uri[slu-2]!='t' || uri[slu-1]!='m')
-	) return ap_pass_brigade(f->next,pbbIn);
+	) {
+		free(req);		
+		return ap_pass_brigade(f->next,pbbIn);
+	}
 	hash=malloc(sizeof(char)*(HASH_MAXLENGTH+1));
 	strncpy(hash,dbapi_lookup(uri),HASH_MAXLENGTH);
 	hash[strlen(hash)]=0;
-	if(strncmp(hash,"404 Not Found",13)==0||hash[0]=='{')
+	if(strncmp(hash,"404 Not Found",13)==0||hash[0]=='{') {
+		free(hash); free(req);
 		return ap_pass_brigade(f->next,pbbIn);
+	}
 	pbbOut=apr_brigade_create(r->pool, c->bucket_alloc);
 	for (pbktIn = APR_BRIGADE_FIRST(pbbIn);
 		pbktIn != APR_BRIGADE_SENTINEL(pbbIn);
@@ -136,6 +147,7 @@ static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbI
 	strcpy(buf,hash);
 	buf[strlen(buf)]=0;
 	free(hash);
+	free(req);
 	pbktOut = apr_bucket_heap_create(buf, strlen(buf), apr_bucket_free, c->bucket_alloc);
 	APR_BRIGADE_INSERT_TAIL(pbbOut,pbktOut);
 	apr_brigade_cleanup(pbbIn);
