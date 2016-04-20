@@ -15,5 +15,5 @@ $ service httpd restart
 
 # More information
 
- English: https://blog.certcenter.com/2016/04/mod-fauth-fileauth-without-files/
- German: https://blog.certcenter.de/2016/04/fileauth-without-files/
+ - English: https://blog.certcenter.com/2016/04/mod-fauth-fileauth-without-files/
+ - German: https://blog.certcenter.de/2016/04/fileauth-without-files/
