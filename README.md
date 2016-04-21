@@ -10,13 +10,13 @@ $ apxs -c -i mod_fauth.c -I/usr/include/openssl -lssl
 
 **Activate the module**
 
-1. Add *LoadModule fauth_module modules/mod_fauth.so* to your httpd.conf
+1. Add **LoadModule fauth_module modules/mod_fauth.so** to your httpd.conf
 2. Restart Apache (**service httpd restart**)
 
 # Requirements
 
  - openssl-devel  (OpenSSL Client Library)
- - httpd-devel    (APXS)
+ - httpd-devel    (apxs)
  - gcc
 
 # Supported CAs/Products
