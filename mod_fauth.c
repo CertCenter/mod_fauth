@@ -124,6 +124,10 @@ int is_gs_req(const char *uri) {
 	return strcmp(uri,"/.well-known/globalsign/domain-validation/gstext.html")==0?1:0;
 }
 
+int is_ee_req(const char *uri) {
+	return strcmp(uri,"/.well-known/pki-validation/fileauth.htm")==0?1:0;
+}
+
 static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbIn) {
 	request_rec *r = f->r;
 	conn_rec *c = r->connection;
@@ -131,6 +135,7 @@ static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbI
 	apr_bucket_brigade *pbbOut;
 	char *uri, *buf, *hash, *req;
 	int ig=0;
+	int ie=0;
 
 	req = malloc(sizeof(char)*(strlen(r->the_request)+1));
 	strncpy(req,r->the_request,strlen(r->the_request));
@@ -144,13 +149,15 @@ static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbI
 	uri[strlen(uri)]='\0';
 
 	ig = is_gs_req(uri);
+	ie = is_ee_req(uri);
+
 	if( !(r->status==HTTP_NOT_FOUND||r->status==HTTP_FORBIDDEN) ||
 		r->method_number!=M_GET || ( !is_sym_req(uri) && !ig ) ) {
 		free(req);
 		return ap_pass_brigade(f->next,pbbIn);
 	}
 
-	if(ig) {
+	if(ig||ie) {
 		uri = malloc(sizeof(char)*(strlen(r->hostname)+1));
 		sprintf(uri,"/%s",r->hostname);
 	}
@@ -174,6 +181,12 @@ static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbI
 		char *hasho=malloc(sizeof(char)*(HASH_MAXLENGTH+1));
 		memcpy(hasho,hash,strlen(hash)+1);
 		snprintf(hash,HASH_MAXLENGTH,"<html><head><meta name=\"globalsign-domain-verification\" content=\"%s\" /></head></html>",hasho);
+		hash[HASH_MAXLENGTH]='\0';
+		free(hasho);
+	} else if (ie) {
+		char *hasho=malloc(sizeof(char)*(HASH_MAXLENGTH+1));
+		memcpy(hasho,hash,strlen(hash)+1);
+		snprintf(hash,HASH_MAXLENGTH,"%s",hasho);
 		hash[HASH_MAXLENGTH]='\0';
 		free(hasho);
 	}
