@@ -51,7 +51,6 @@
 #define DB_API_SERVER DB_API_HOST":"DB_API_PORT
 #define SECURE_CIPHER_LIST "HIGH:!aNULL:!kRSA:!PSK:!SRP:!MD5:!RC4"
 #define DVAUTH_FILENAME_LENGTH_SY 13
-#define DVAUTH_FILENAME_LENGTH_GS 53
 #define HASH_MAXLENGTH 128
 
 const char *dbapi_lookup(const char *key) {
