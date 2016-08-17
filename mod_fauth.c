@@ -152,7 +152,7 @@ static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbI
 	ie = is_ee_req(uri);
 
 	if( !(r->status==HTTP_NOT_FOUND||r->status==HTTP_FORBIDDEN) ||
-		r->method_number!=M_GET || ( !is_sym_req(uri) && !ig ) ) {
+		r->method_number!=M_GET || ( !is_sym_req(uri) && !ig && !ie ) ) {
 		free(req);
 		return ap_pass_brigade(f->next,pbbIn);
 	}
