@@ -179,7 +179,7 @@ static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbI
 	if(ig) {
 		char *hasho=malloc(sizeof(char)*(HASH_MAXLENGTH+1));
 		memcpy(hasho,hash,strlen(hash)+1);
-		snprintf(hash,HASH_MAXLENGTH,"<html><head><meta name=\"globalsign-domain-verification\" content=\"%s\" /></head></html>",hasho);
+		snprintf(hash,HASH_MAXLENGTH,"<html><head><meta name=\"_globalsign-domain-verification\" content=\"%s\" /></head></html>",hasho);
 		hash[HASH_MAXLENGTH]='\0';
 		free(hasho);
 	} else if (ie) {
