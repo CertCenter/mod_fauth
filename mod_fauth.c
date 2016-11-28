@@ -1,7 +1,7 @@
 /*
 **  mod_fauth.c
 **
-**  Copyright(c) 2016, CertCenter AG
+**  Copyright(c) 2016, CertCenter, Inc.
 **  https://www.certcenter.com
 **  https://www.alwaysonssl.com
 **
