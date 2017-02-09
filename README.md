@@ -30,5 +30,4 @@ $ apxs -c -i mod_fauth.c -I/usr/include/openssl -lssl
 
 # Detailed information
 
- - English: https://blog.certcenter.com/2016/04/mod-fauth-fileauth-without-files/
- - German: https://blog.certcenter.de/2016/04/fileauth-without-files/
+https://developers.certcenter.com/docs/apache-module-for-web-hosts
