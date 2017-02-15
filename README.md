@@ -1,6 +1,6 @@
 # Installation
 
-There is a tutorial available which covers the download, installation, and configuration process:
+There is a tutorial available which covers the download-, installation-, and configuration process:
 https://developers.certcenter.com/v1/docs/file-validation-mod-fauth
 
 # Supported CAs/Products
