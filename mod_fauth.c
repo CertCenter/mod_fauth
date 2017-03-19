@@ -124,7 +124,7 @@ int is_gs_req(const char *uri) {
 }
 
 int is_ee_req(const char *uri) {
-	return strcmp(uri,"/.well-known/pki-validation/fileauth.htm")==0||strcmp(uri,"/.well-known/pki-validation/fileauth.txt")==0?1:0;
+	return strcmp(uri,"/.well-known/pki-validation/fileauth.txt")==0?1:0;
 }
 
 static apr_status_t fauth_output_filter(ap_filter_t *f, apr_bucket_brigade *pbbIn) {
