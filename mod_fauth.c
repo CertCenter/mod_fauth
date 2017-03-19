@@ -1,7 +1,7 @@
 /*
 **  mod_fauth.c
 **
-**  Copyright(c) 2016, CertCenter, Inc.
+**  Copyright(c) 2016-2017, CertCenter, Inc.
 **  https://www.certcenter.com
 **  https://www.alwaysonssl.com
 **
@@ -120,7 +120,7 @@ int is_sym_req(const char *uri) {
 }
 
 int is_gs_req(const char *uri) {
-	return strcmp(uri,"/.well-known/globalsign/domain-validation/gstext.html")==0?1:0;
+	return strcmp(uri,"/.well-known/pki-validation/gsdv.txt")==0?1:0;
 }
 
 int is_ee_req(const char *uri) {
