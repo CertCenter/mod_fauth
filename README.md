@@ -10,6 +10,6 @@ https://developers.certcenter.com/v1/docs/file-validation-mod-fauth
  - RapidSSL DV
  - GlobalSign DV
  - AlphaSSL DV
- - AlwaysOnSSL by Symantec
- - Symantec Encryption Everywhere
+ - AlwaysOnSSL
+ - DigiCert Encryption Everywhere
  
